@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import cytoscape from 'cytoscape';
+import cytoscape, { ElementDefinition, ElementsDefinition } from 'cytoscape';
 import styles from './Graph.module.css';
 
 const style = [
@@ -24,26 +24,34 @@ const style = [
   },
 ];
 
+const simpleTopology: ElementDefinition[] = [
+  {
+    data: { id: 'h1' },
+  },
+  {
+    data: { id: 'h2' },
+  },
+  { data: { id: 's1' } },
+  {
+    data: { id: 'h1s1', source: 'h1', target: 's1' },
+  },
+  {
+    data: { id: 's1h1', source: 's1', target: 'h1' },
+  },
+  {
+    data: { id: 's1h2', source: 's1', target: 'h2' },
+  },
+  {
+    data: { id: 'h2s1', source: 'h2', target: 's1' },
+  },
+];
+
 export default function Graph() {
   useEffect(() => {
     const cy = cytoscape({
       container: document.getElementById('graph'), // container to render in
 
-      elements: [
-        // list of graph elements to start with
-        {
-          // node a
-          data: { id: 'a' },
-        },
-        {
-          // node b
-          data: { id: 'b' },
-        },
-        {
-          // edge ab
-          data: { id: 'ab', source: 'a', target: 'b' },
-        },
-      ],
+      elements: simpleTopology,
       style,
 
       layout: {
