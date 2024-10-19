@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import cytoscape, { ElementDefinition, ElementsDefinition } from 'cytoscape';
 import styles from './Graph.module.css';
+import fcose from 'cytoscape-fcose';
 
 const style = [
   // the stylesheet for the graph
@@ -48,6 +49,7 @@ const simpleTopology: ElementDefinition[] = [
 
 export default function Graph() {
   useEffect(() => {
+    cytoscape.use(fcose);
     const cy = cytoscape({
       container: document.getElementById('graph'), // container to render in
 
@@ -55,8 +57,7 @@ export default function Graph() {
       style,
 
       layout: {
-        name: 'grid',
-        rows: 1,
+        name: 'fcose',
       },
     });
   }, []);
