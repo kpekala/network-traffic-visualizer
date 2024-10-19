@@ -1,4 +1,4 @@
-import Graph from './components/Graph';
+import Graph from './components/graph/Graph';
 import Navbar from './components/Navbar';
 import styles from './App.module.css';
 
