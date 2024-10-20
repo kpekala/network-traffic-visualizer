@@ -4,6 +4,7 @@ import styles from './Graph.module.css';
 import fcose from 'cytoscape-fcose';
 import { NetworkDTO } from '../../data/dto';
 import { li } from 'framer-motion/client';
+import { Box } from '@chakra-ui/react';
 
 const style = [
   // the stylesheet for the graph
@@ -27,46 +28,7 @@ const style = [
   },
 ];
 
-const simpleTopology: NetworkDTO = {
-  nodes: ['h1', 'h2', 's1'],
-  links: [
-    {
-      start: 'h1',
-      end: 's1',
-      load: 50,
-    },
-    {
-      start: 's1',
-      end: 'h1',
-      load: 123,
-    },
-    {
-      start: 's1',
-      end: 'h2',
-      load: 2137,
-    },
-    {
-      start: 'h2',
-      end: 's1',
-      load: 2137,
-    },
-  ],
-};
-
-function useNetworkData() {
-  const [network, setNetwork] = useState<NetworkDTO>({ links: [], nodes: [] });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setNetwork(simpleTopology);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return network;
-}
-
-export default function Graph() {
+export default function Graph({ network }: { network: NetworkDTO }) {
   const [cy, setCy] = useState<null | cytoscape.Core>(null);
 
   useEffect(() => {
@@ -82,13 +44,12 @@ export default function Graph() {
     setCy(cy);
   }, []);
   const isNetworkCreated = useRef(false);
-  const networkDTO = useNetworkData();
-  if (networkDTO.nodes.length !== 0 && !isNetworkCreated.current) {
+  if (network.nodes.length !== 0 && !isNetworkCreated.current) {
     isNetworkCreated.current = true;
-    networkDTO.nodes.forEach((node) => {
+    network.nodes.forEach((node) => {
       cy?.add({ data: { id: node } });
     });
-    networkDTO.links.forEach((link) => {
+    network.links.forEach((link) => {
       cy?.add({
         data: {
           id: link.start + link.end,
@@ -101,5 +62,5 @@ export default function Graph() {
     cy?.forceRender();
   }
 
-  return <div id='graph' className={styles.graph}></div>;
+  return <Box flexGrow={1} id='graph' className={styles.graph} />;
 }
