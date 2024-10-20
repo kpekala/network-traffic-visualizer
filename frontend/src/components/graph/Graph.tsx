@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
-import cytoscape, { ElementDefinition, ElementsDefinition } from 'cytoscape';
-import styles from './Graph.module.css';
-import fcose from 'cytoscape-fcose';
-import { NetworkDTO } from '../../data/dto';
-import { li } from 'framer-motion/client';
 import { Box } from '@chakra-ui/react';
+import cytoscape from 'cytoscape';
+import fcose from 'cytoscape-fcose';
+import { useEffect, useRef, useState } from 'react';
+import { NetworkDTO } from '../../data/dto';
+import styles from './Graph.module.css';
 
 const style = [
   // the stylesheet for the graph
@@ -24,6 +23,8 @@ const style = [
       'target-arrow-color': '#ccc',
       'target-arrow-shape': 'triangle',
       'curve-style': 'bezier',
+      label: 'data(label)',
+      'font-size': '8px',
     },
   },
 ];
@@ -55,6 +56,7 @@ export default function Graph({ network }: { network: NetworkDTO }) {
           id: link.start + link.end,
           source: link.start,
           target: link.end,
+          label: link.label,
         },
       });
     });

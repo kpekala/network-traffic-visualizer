@@ -1,5 +1,5 @@
 export interface Link {
-  load: number;
+  label: string;
   start: string;
   end: string;
 }

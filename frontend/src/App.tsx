@@ -12,22 +12,22 @@ const simpleTopology: NetworkDTO = {
     {
       start: 'h1',
       end: 's1',
-      load: 50,
+      label: '50 Mbit/s',
     },
     {
       start: 's1',
       end: 'h1',
-      load: 123,
+      label: '123 Mbit/s',
     },
     {
       start: 's1',
       end: 'h2',
-      load: 2137,
+      label: '2137 Mbit/s',
     },
     {
       start: 'h2',
       end: 's1',
-      load: 2137,
+      label: '2137 Mbit/s',
     },
   ],
 };

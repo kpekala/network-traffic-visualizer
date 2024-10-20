@@ -24,7 +24,7 @@ function LinkItem({ link }: { link: Link }) {
       <Heading as='h4' size='sm'>
         Link {link.start} &rarr; {link.end}
       </Heading>
-      <Text>Load: {link.load}</Text>
+      <Text>Load: {link.label}</Text>
     </ListItem>
   );
 }
