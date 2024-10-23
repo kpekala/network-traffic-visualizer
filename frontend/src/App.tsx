@@ -1,10 +1,9 @@
+import { useEffect, useState } from 'react';
+import styles from './App.module.css';
+import DeviceList from './components/device-list/DeviceList';
 import Graph from './components/graph/Graph';
 import Navbar from './components/Navbar';
-import styles from './App.module.css';
-import { useEffect, useState } from 'react';
 import { NetworkDTO } from './data/dto';
-import { Box } from '@chakra-ui/react';
-import DeviceList from './components/device-list/DeviceList';
 
 const simpleTopology: NetworkDTO = {
   nodes: ['h1', 'h2', 's1'],
@@ -51,10 +50,10 @@ function App() {
   return (
     <div className={styles.container}>
       <Navbar />
-      <Box height='100%' display='flex'>
+      <div className='h-full flex'>
         <DeviceList network={network} />
         <Graph network={network} />
-      </Box>
+      </div>
     </div>
   );
 }

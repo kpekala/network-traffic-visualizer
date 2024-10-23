@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import cytoscape from 'cytoscape';
 import fcose from 'cytoscape-fcose';
 import { useEffect, useRef, useState } from 'react';
@@ -10,7 +9,7 @@ const style = [
   {
     selector: 'node',
     style: {
-      'background-color': '#666',
+      'background-color': '#a78bfa',
       label: 'data(id)',
     },
   },
@@ -64,5 +63,5 @@ export default function Graph({ network }: { network: NetworkDTO }) {
     cy?.forceRender();
   }
 
-  return <Box flexGrow={1} id='graph' className={styles.graph} />;
+  return <div id='graph' className={`${styles.graph} grow`} />;
 }

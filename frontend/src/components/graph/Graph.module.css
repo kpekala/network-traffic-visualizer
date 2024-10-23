@@ -1,3 +1,5 @@
 .graph {
-  height: calc(100% - var(--chakra-sizes-16));
+  height: calc(100vh - 64px);
+  width: calc(100vw - 192px);
+  display: block;
 }

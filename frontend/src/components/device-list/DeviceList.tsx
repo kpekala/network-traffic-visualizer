@@ -1,30 +1,32 @@
-import { Divider, Heading, List, ListItem, Text } from '@chakra-ui/react';
+import { label } from 'framer-motion/client';
 import { Link, NetworkDTO } from '../../data/dto';
 
 export default function DeviceList({ network }: { network: NetworkDTO }) {
   return (
-    <List spacing={3} width={256} padding={4} backgroundColor={'teal.50'}>
-      {network.nodes.map((node) => (
-        <NodeItem name={node} />
-      ))}
-      {network.links.map((link) => (
-        <LinkItem link={link} />
-      ))}
-    </List>
+    <div className='z-10 h-full bg-gray-50 border-r'>
+      <ul className='space-y-4' style={{ paddingTop: 8 }}>
+        {network.nodes.map((node) => (
+          <NodeItem name={node} key={node} />
+        ))}
+        {network.links.map((link) => (
+          <LinkItem link={link} key={`${link.start}${link.end}`} />
+        ))}
+      </ul>
+    </div>
   );
 }
 
 function NodeItem({ name }: { name: string }) {
-  return <ListItem>{name}</ListItem>;
+  return <li className='pl-4 pr-4'>{name}</li>;
 }
 
 function LinkItem({ link }: { link: Link }) {
   return (
-    <ListItem>
-      <Heading as='h4' size='sm'>
+    <div className='w-48 pl-4 pr-4'>
+      <h4 className='text-sm font-bold'>
         Link {link.start} &rarr; {link.end}
-      </Heading>
-      <Text>Load: {link.label}</Text>
-    </ListItem>
+      </h4>
+      <p>Load: {link.label}</p>
+    </div>
   );
 }
