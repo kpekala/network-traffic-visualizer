@@ -47,14 +47,14 @@ export default function Graph({ network }: { network: NetworkDTO }) {
   if (network.nodes.length !== 0 && !isNetworkCreated.current) {
     isNetworkCreated.current = true;
     network.nodes.forEach((node) => {
-      cy?.add({ data: { id: node } });
+      cy?.add({ data: { id: node.name } });
     });
     network.links.forEach((link) => {
       cy?.add({
         data: {
-          id: link.start + link.end,
-          source: link.start,
-          target: link.end,
+          id: link.node1 + link.node2,
+          source: link.node1,
+          target: link.node2,
           label: link.label,
         },
       });

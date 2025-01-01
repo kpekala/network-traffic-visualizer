@@ -6,26 +6,26 @@ import Navbar from './components/Navbar';
 import { NetworkDTO } from './data/dto';
 
 const simpleTopology: NetworkDTO = {
-  nodes: ['h1', 'h2', 's1'],
+  nodes: [{ name: 'h1' }, { name: 'h2' }, { name: 's1' }],
   links: [
     {
-      start: 'h1',
-      end: 's1',
+      node1: 'h1',
+      node2: 's1',
       label: '50 Mbit/s',
     },
     {
-      start: 's1',
-      end: 'h1',
+      node1: 's1',
+      node2: 'h1',
       label: '123 Mbit/s',
     },
     {
-      start: 's1',
-      end: 'h2',
+      node1: 's1',
+      node2: 'h2',
       label: '2137 Mbit/s',
     },
     {
-      start: 'h2',
-      end: 's1',
+      node1: 'h2',
+      node2: 's1',
       label: '2137 Mbit/s',
     },
   ],
@@ -36,6 +36,11 @@ function useNetworkData() {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      fetch('http://192.168.100.116:8080/backend/data')
+        .then(async (result) => result.json())
+        .then((data) => {
+          console.log(data);
+        });
       setNetwork(simpleTopology);
     }, 2000);
     return () => clearInterval(interval);

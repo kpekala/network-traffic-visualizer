@@ -1,10 +1,14 @@
 export interface Link {
   label: string;
-  start: string;
-  end: string;
+  node1: string;
+  node2: string;
+}
+
+export interface Node {
+  name: string;
 }
 
 export interface NetworkDTO {
-  nodes: string[];
+  nodes: Node[];
   links: Link[];
 }
