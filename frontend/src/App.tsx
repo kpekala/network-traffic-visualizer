@@ -36,12 +36,12 @@ function useNetworkData() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://192.168.100.116:8080/backend/data')
+      fetch('http://192.168.0.107:8080/backend/data')
         .then(async (result) => result.json())
         .then((data) => {
           console.log(data);
+          setNetwork(data);
         });
-      setNetwork(simpleTopology);
     }, 2000);
     return () => clearInterval(interval);
   }, []);

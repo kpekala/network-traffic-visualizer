@@ -44,24 +44,29 @@ export default function Graph({ network }: { network: NetworkDTO }) {
     setCy(cy);
   }, []);
   const isNetworkCreated = useRef(false);
-  if (network.nodes.length !== 0 && !isNetworkCreated.current) {
-    isNetworkCreated.current = true;
-    network.nodes.forEach((node) => {
-      cy?.add({ data: { id: node.name } });
-    });
-    network.links.forEach((link) => {
-      cy?.add({
-        data: {
-          id: link.node1 + link.node2,
-          source: link.node1,
-          target: link.node2,
-          label: link.label,
-        },
+  if (network.nodes.length !== 0) {
+    if (!isNetworkCreated.current) {
+      isNetworkCreated.current = true;
+      network.nodes.forEach((node) => {
+        cy?.add({ data: { id: node.name } });
       });
-    });
-    cy?.layout({ name: 'fcose' }).run();
-    cy?.forceRender();
+      network.links.forEach((link) => {
+        cy?.add({
+          data: {
+            id: link.node1 + link.node2,
+            source: link.node1,
+            target: link.node2,
+            label: link.label,
+          },
+        });
+      });
+      cy?.layout({ name: 'fcose' }).run();
+      cy?.forceRender();
+    } else {
+      network.links.forEach((link) => {
+        cy?.getElementById(link.node1 + link.node2).data('label', link.label);
+      });
+    }
   }
-
   return <div id='graph' className={`${styles.graph} grow`} />;
 }
