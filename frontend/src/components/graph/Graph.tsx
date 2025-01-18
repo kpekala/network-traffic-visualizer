@@ -64,7 +64,28 @@ export default function Graph({ network }: { network: NetworkDTO }) {
       cy?.forceRender();
     } else {
       network.links.forEach((link) => {
-        cy?.getElementById(link.node1 + link.node2).data('label', link.label);
+        const edge = cy?.getElementById(link.node1 + link.node2);
+        if (link.timestamp > 5000) {
+          console.log(
+            `removing ${link.node1 + link.node2} because timestamp diff is ${
+              link.timestamp
+            }`
+          );
+          edge?.remove();
+        } else if (edge?.length === 0) {
+          console.log('adding link ' + link.node1 + link.node2);
+          cy?.add({
+            data: {
+              id: link.node1 + link.node2,
+              source: link.node1,
+              target: link.node2,
+              label: link.label,
+            },
+          });
+        } else {
+          console.log('updating label');
+          edge?.data('label', link.label);
+        }
       });
     }
   }
