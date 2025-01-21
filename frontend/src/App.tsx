@@ -10,7 +10,7 @@ function useNetworkData() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      fetch('http://192.168.0.107:8080/backend/data')
+      fetch('http://192.168.0.108:8080/backend/data')
         .then(async (result) => result.json())
         .then((data) => {
           setNetwork(data);

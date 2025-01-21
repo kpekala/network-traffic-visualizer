@@ -3,30 +3,7 @@ import fcose from 'cytoscape-fcose';
 import { useEffect, useRef, useState } from 'react';
 import { NetworkDTO } from '../../data/dto';
 import styles from './Graph.module.css';
-
-const style = [
-  // the stylesheet for the graph
-  {
-    selector: 'node',
-    style: {
-      'background-color': '#a78bfa',
-      label: 'data(id)',
-    },
-  },
-
-  {
-    selector: 'edge',
-    style: {
-      width: 3,
-      'line-color': '#ccc',
-      'target-arrow-color': '#ccc',
-      'target-arrow-shape': 'triangle',
-      'curve-style': 'bezier',
-      label: 'data(label)',
-      'font-size': '8px',
-    },
-  },
-];
+import { style } from './style';
 
 export default function Graph({ network }: { network: NetworkDTO }) {
   const [cy, setCy] = useState<null | cytoscape.Core>(null);
@@ -63,6 +40,13 @@ export default function Graph({ network }: { network: NetworkDTO }) {
       cy?.layout({ name: 'fcose' }).run();
       cy?.forceRender();
     } else {
+      network.nodes.forEach((n) => {
+        const node = cy?.getElementById(n.name);
+        if (node?.length === 0) {
+          console.log('adding node ' + n.name);
+          cy?.add({ data: { id: n.name } });
+        }
+      });
       network.links.forEach((link) => {
         const edge = cy?.getElementById(link.node1 + link.node2);
         if (link.timestamp > 5000) {
